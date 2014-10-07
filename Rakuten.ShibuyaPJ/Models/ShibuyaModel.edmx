@@ -5,22 +5,24 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="ShibuyaDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Van">
+        <EntityType Name="Vans">
           <Key>
             <PropertyRef Name="VanId" />
           </Key>
-          <Property Name="VanId" Type="int" Nullable="false" />
-          <Property Name="VanNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="VanId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VanNumber" Type="nvarchar(max)" />
           <Property Name="NumberOfOpenOrders" Type="int" />
           <Property Name="NumberOfDeliveredOrders" Type="int" />
           <Property Name="NumberOfRedelivered" Type="int" />
           <Property Name="NextETA" Type="datetime" />
           <Property Name="LastETA" Type="datetime" />
-          <Property Name="NDI" Type="nchar" MaxLength="10" />
-          <Property Name="Status" Type="nchar" MaxLength="10" />
+          <Property Name="NDI" Type="nvarchar(max)" />
+          <Property Name="Status" Type="nvarchar(max)" />
+          <Property Name="Latitude" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Longitude" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityContainer Name="ShibuyaDBModelStoreContainer">
-          <EntitySet Name="Van" EntityType="Self.Van" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vans" EntityType="Self.Vans" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -28,22 +30,24 @@
       <Schema Namespace="ShibuyaDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="ShibuyaDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Vans" EntityType="ShibuyaDBModel.Van" />
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="Van">
           <Key>
             <PropertyRef Name="VanId" />
           </Key>
-          <Property Name="VanId" Type="Int32" Nullable="false" />
-          <Property Name="VanNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VanId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VanNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="NumberOfOpenOrders" Type="Int32" />
           <Property Name="NumberOfDeliveredOrders" Type="Int32" />
           <Property Name="NumberOfRedelivered" Type="Int32" />
           <Property Name="NextETA" Type="DateTime" Precision="3" />
           <Property Name="LastETA" Type="DateTime" Precision="3" />
-          <Property Name="NDI" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Status" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="NDI" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Latitude" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Longitude" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -51,7 +55,9 @@
         <EntityContainerMapping StorageEntityContainer="ShibuyaDBModelStoreContainer" CdmEntityContainer="ShibuyaDBEntities">
           <EntitySetMapping Name="Vans">
             <EntityTypeMapping TypeName="ShibuyaDBModel.Van">
-              <MappingFragment StoreEntitySet="Van">
+              <MappingFragment StoreEntitySet="Vans">
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="NDI" ColumnName="NDI" />
                 <ScalarProperty Name="LastETA" ColumnName="LastETA" />
