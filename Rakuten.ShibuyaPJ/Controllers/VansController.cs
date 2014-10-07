@@ -1,28 +1,90 @@
 ﻿using Rakuten.ShibuyaPJ.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Results;
 using System.Xml.Linq;
+using Newtonsoft.Json;
 
 namespace Rakuten.ShibuyaPJ.Controllers
 {
-    public class VansController : ApiController
+    public class VansController : ApiController, IVanRepository
     {
         Van[] vans = new Van[] 
         { 
-            new Van { VanNumber="11", VanId=1, NumberOfRedelivered=1 }, 
-            new Van { VanNumber="12", VanId=2, NumberOfRedelivered=2 }, 
-            new Van { VanNumber="13", VanId=3, NumberOfRedelivered=3 } 
+            new Van { VanNumber="11", Latitude="35.660403", Longitude="139.69599" }, 
+            new Van { VanNumber="12", Latitude="35.660605", Longitude="139.700372" }
         };
 
-        //public IEnumerable<Van> GetAllVans()
-        //{
-        //    return vans;
-        //}
+        internal ShibuyaDBEntities context;
+        internal DbSet dbSet;
 
+        public VansController()
+        {
+            this.context = new ShibuyaDBEntities();
+            dbSet = context.Set<Van>();
+        }
+
+        public VansController(ShibuyaDBEntities context)
+        {
+            this.context = context;
+            this.dbSet = context.Set<Van>();
+        }
+
+        //Get api/vans/GetAllVehicles?custLatitude=""&custLongitude="" 
+        /// <summary>
+        /// App users will get vehicles operating around them on very first screen of customer App.
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult<Van[]> GetAllVehicles(string custLatitude, string custLongitude)
+        {
+            return Json<Van[]>(vans);
+        }
+
+        /// <summary>
+        /// Get best possible ETA for this Order.
+        /// </summary>
+        /// <param name="custLatitude"></param>
+        /// <param name="custLongitude"></param>
+        /// <param name="productID"></param>
+        /// <returns></returns>
+        public JsonResult<object> GetBestETA(string custLatitude, string custLongitude, string productID)
+        {
+            var vanDetails = new { VanId = string.Empty, ETA = DateTime.MinValue };
+
+            try
+            {
+                vanDetails = new { VanId = "2", ETA = DateTime.Now };
+            }
+            catch (HttpResponseException ex)
+            {
+                HttpResponseMessage responseMessage = new HttpResponseMessage();
+                if (ex.Response.StatusCode == HttpStatusCode.BadGateway)
+                {
+                    responseMessage.StatusCode = HttpStatusCode.BadGateway;
+                    responseMessage.ReasonPhrase = "Please provide coordinates.";
+                }
+                else if (ex.Response.StatusCode == HttpStatusCode.BadRequest)
+                {
+                    responseMessage.StatusCode = HttpStatusCode.BadRequest;
+                    responseMessage.ReasonPhrase = "Invalid Product Id.";
+                }
+                else if (ex.Response.StatusCode == HttpStatusCode.InternalServerError)
+                {
+                    responseMessage.StatusCode = HttpStatusCode.InternalServerError;
+                    responseMessage.ReasonPhrase = "Something went wrong. Please try again later.";
+                }
+                throw new HttpResponseException(responseMessage);
+            }
+            return Json<object>(vanDetails);
+        }
+
+  
         //public IHttpActionResult GetVan(int id)
         //{
         //    var van = vans.FirstOrDefault((p) => p.VanId == id);
@@ -31,11 +93,6 @@ namespace Rakuten.ShibuyaPJ.Controllers
         //        return NotFound();
         //    }
         //    return Ok(van);
-        //}
-
-        //public IHttpActionResult GetVehiclePosition(string lng, string ltd)
-        //{
-        //    GeoLocation
         //}
 
         //public static Coordinate GetCoordinates(string region)
@@ -60,8 +117,6 @@ namespace Rakuten.ShibuyaPJ.Controllers
 
         public string GetFormatedAddress(string lat, string lng)     
         {
-            //string lat = "10"; string lng = "17";
-
             string requestUri = string.Format(baseUri, lat, lng);
 
             using (WebClient wc = new WebClient())
@@ -97,6 +152,6 @@ namespace Rakuten.ShibuyaPJ.Controllers
 
             public double Latitude { get { return lat; } set { lat = value; } }
             public double Longitude { get { return lng; } set { lng = value; } }
-        }
+        }   
     }
 }
