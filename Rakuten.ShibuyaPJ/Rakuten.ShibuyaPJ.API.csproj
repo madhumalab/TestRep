@@ -80,21 +80,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\ShibuyaDB.mdf" />
-    <Content Include="App_Data\ShibuyaDB_log.ldf">
-      <DependentUpon>ShibuyaDB.mdf</DependentUpon>
-    </Content>
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\VansController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\function GetLocation.cs" />
     <Compile Include="Models\GenericRepositiory.cs" />
     <Compile Include="Models\IGenericRepository.cs" />
+    <Compile Include="Models\IVanRepository.cs" />
+    <Compile Include="Models\RakutenShibuyaPJAPIContext.cs" />
     <Compile Include="Models\ShibuyaModel.Context.cs" />
     <Compile Include="Models\ShibuyaModel.cs" />
     <Compile Include="Models\ShibuyaModel.designer.cs">
@@ -103,6 +101,7 @@
     <Compile Include="Models\Van.cs">
       <DependentUpon>ShibuyaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\VanRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -126,7 +125,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
