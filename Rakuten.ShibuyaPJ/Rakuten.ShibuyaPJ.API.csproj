@@ -92,27 +92,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\function GetLocation.cs" />
     <Compile Include="Models\GenericRepositiory.cs" />
     <Compile Include="Models\IGenericRepository.cs" />
     <Compile Include="Models\ShibuyaModel.Context.cs" />
-    <Compile Include="Models\ShibuyaModel.Context1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ShibuyaModel.Context.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ShibuyaModel.cs" />
     <Compile Include="Models\ShibuyaModel.designer.cs">
       <DependentUpon>ShibuyaModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ShibuyaModel1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ShibuyaModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ShibuyaModel1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ShibuyaModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Van.cs">
       <DependentUpon>ShibuyaModel.tt</DependentUpon>
@@ -121,10 +107,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include="Models\ShibuyaModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ShibuyaModel.Context1.cs</LastGenOutput>
-    </Content>
     <EntityDeploy Include="Models\ShibuyaModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ShibuyaModel1.Designer.cs</LastGenOutput>
