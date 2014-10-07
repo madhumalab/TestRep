@@ -23,7 +23,7 @@ namespace Rakuten.ShibuyaPJ.Models
         public Nullable<System.DateTime> LastETA { get; set; }
         public string NDI { get; set; }
         public string Status { get; set; }
-        public Nullable<decimal> Latitude { get; set; }
-        public Nullable<decimal> Longitude { get; set; }
+        public string Latitude { get; set; }
+        public string Longitude { get; set; }
     }
 }
