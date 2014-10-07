@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rakuten.ShibuyaPJ", "Rakuten.ShibuyaPJ\Rakuten.ShibuyaPJ.csproj", "{74DBD9F7-2393-4763-BF8B-F489D18D9511}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rakuten.ShibuyaPJ.API", "Rakuten.ShibuyaPJ\Rakuten.ShibuyaPJ.API.csproj", "{74DBD9F7-2393-4763-BF8B-F489D18D9511}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
